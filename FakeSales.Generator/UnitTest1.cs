@@ -30,7 +30,7 @@ namespace FakeSales.Generator
 
             TRandom random = new TRandom();
 
-            for(int i = 0; i < 50; i++)
+            for(int i = 51; i < 53; i++)
             {
                 var sales = new List<SaleRecord>();
                 for(int j = 0; j< 50000; j++)

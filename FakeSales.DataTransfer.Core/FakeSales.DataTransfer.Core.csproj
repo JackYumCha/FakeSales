@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Jack.DataScience\Jack.DataScience\Jack.DataScience.Common\Jack.DataScience.Common.csproj" />
+    <ProjectReference Include="..\..\Jack.DataScience\Jack.DataScience\Jack.DataScience.Data.Parquet\Jack.DataScience.Data.Parquet.csproj" />
     <ProjectReference Include="..\..\Jack.DataScience\Jack.DataScience\Jack.DataScience.Storage.AWSS3\Jack.DataScience.Storage.AWSS3.csproj" />
     <ProjectReference Include="..\..\Jack.DataScience\Jack.DataScience\Jack.DataScience.Storage.SFTP\Jack.DataScience.Storage.SFTP.csproj" />
   </ItemGroup>
