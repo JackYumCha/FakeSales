@@ -11,6 +11,7 @@ using Jack.DataScience.Data.Parquet;
 using System.IO;
 using CsvHelper;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace FakeSales.DataTransfer.Core
 {
@@ -83,6 +84,14 @@ namespace FakeSales.DataTransfer.Core
                                 {
                                     filePartIndex = await WriteItemsToParquet(filename, filePartIndex, nameReplacer, list, bucket);
                                 }
+
+                                using (var uploadSuccessStream = new MemoryStream(Encoding.UTF8.GetBytes(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fff"))))
+                                {
+                                    using(var transferStream = new MemoryStream(uploadSuccessStream.ToArray()))
+                                    {
+                                        await awsS3.Upload(filename, transferStream, bucket);
+                                    }
+                                }
                             }
                         }
                             
@@ -97,7 +106,7 @@ namespace FakeSales.DataTransfer.Core
         private async Task<int> WriteItemsToParquet<T>(string filename, int filePartIndex, Regex nameReplacer, 
             List<T> list, string bucket) where T: class
         {
-            var s3Filename = nameReplacer.Replace(filename, $"-{filePartIndex.ToString().PadLeft(3, '0')}.parquet");
+            var s3Filename = "data-" + nameReplacer.Replace(filename, $"-{filePartIndex.ToString().PadLeft(3, '0')}.parquet");
             using (var parquetWriteStream = new MemoryStream())
             {
                 parquetWriteStream.WriteParquet(list);
